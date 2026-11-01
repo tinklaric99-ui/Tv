@@ -70,7 +70,10 @@
   };
 
   /* ---------- State ---------- */
-  var REDUCED_MOTION = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var PROFILE = window.CleanFrameProfile && typeof window.CleanFrameProfile === 'object' ? window.CleanFrameProfile : {};
+  var LOW_MOTION = PROFILE.lowMotion === true, CLOCK_24 = PROFILE.clock === '24h';
+  if (LOW_MOTION) document.documentElement.className += ' cf-low-motion';
+  var REDUCED_MOTION = LOW_MOTION || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var S = {
     variant: 'B', geom: 'broad', c: null, stack: null,
     sel: null, selIdx: 0, lastUtil: 0, appsFocus: null, settingsFocus: 'background', appearanceFocus: 'bg', detailFocus: {},
@@ -361,8 +364,14 @@
     });
     return out;
   }
+  // First-launch seed from profile.js, in the saved shape so clean() validates it.
+  function profileSeed() {
+    if (!Array.isArray(PROFILE.home)) return null;
+    return { home: PROFILE.home.slice(0, CAP), appRecords: Array.isArray(PROFILE.apps) ? PROFILE.apps.slice(0, CAP) : [],
+      look: PROFILE.look && typeof PROFILE.look === 'object' ? PROFILE.look : {}, lastApp: PROFILE.home[0], mode: 'fixed' };
+  }
   function initialise() {
-    var saved = load(), initial; S.c = clean(saved); initial = next(S.c.home.slice(), S.c.recent.slice());
+    var saved = load(), initial; S.c = clean(saved || profileSeed()); initial = next(S.c.home.slice(), S.c.recent.slice());
     S.stack = [{ id: 'home', f: { zone: 'apps', u: 0 } }];
     S.sel = S.c.lastApp; S.selIdx = S.c.home.indexOf(S.sel);
     if (saved && initial.mode === 'open') initial.wall = WALLS[(wallIndex(initial.wall) + 1) % WALLS.length].id;
@@ -1056,7 +1065,7 @@
   }
 
   function clockText() {
-    var d = new Date(), h = d.getHours() % 12 || 12, m = d.getMinutes();
+    var d = new Date(), h = CLOCK_24 ? d.getHours() : d.getHours() % 12 || 12, m = d.getMinutes();
     return h + ':' + (m < 10 ? '0' : '') + m;
   }
   function clockHtml() {
