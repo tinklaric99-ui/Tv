@@ -71,9 +71,8 @@
 
   /* ---------- State ---------- */
   var PROFILE = window.CleanFrameProfile && typeof window.CleanFrameProfile === 'object' ? window.CleanFrameProfile : {};
-  var LOW_MOTION = PROFILE.lowMotion === true, CLOCK_24 = PROFILE.clock === '24h';
-  if (LOW_MOTION) document.documentElement.className += ' cf-low-motion';
-  var REDUCED_MOTION = LOW_MOTION || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var CLOCK_24 = PROFILE.clock === '24h';
+  var REDUCED_MOTION = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var S = {
     variant: 'B', geom: 'broad', c: null, stack: null,
     sel: null, selIdx: 0, lastUtil: 0, appsFocus: null, settingsFocus: 'background', appearanceFocus: 'bg', detailFocus: {},

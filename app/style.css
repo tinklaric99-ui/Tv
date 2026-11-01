@@ -633,11 +633,3 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 .l-list .quiet-utils.is-text .u-content>*+*{margin-left:0;margin-right:0}
 .quiet-utils.is-text .u-content>*+*{margin-left:0}
 .l-list .quiet-utils.is-text .u .u-content>*+*{margin-right:0}
-
-/* profile.js lowMotion: the reduced-motion rules for an older, slower TV,
-   plus fewer paint/compositor costs. Focus feedback remains via opacity. */
-.cf-low-motion .stage,.cf-low-motion .stage *{transition:none!important;animation:none!important;text-shadow:none!important;will-change:auto!important}
-.cf-low-motion .tile .mark,.cf-low-motion .tile .label,.cf-low-motion .gt .mark{transform:none!important;animation:none!important}
-.cf-low-motion .l-list .ph-row,.cf-low-motion .l-list .ph-group,.cf-low-motion .l-list .ph-rows,.cf-low-motion .l-list .ph-plate,.cf-low-motion .l-list .ph-field,.cf-low-motion .l-list .ph-action,.cf-low-motion .quiet-utils .u,.cf-low-motion .quiet-utils .u::after,.cf-low-motion .util-focus-label{transition:opacity 120ms linear!important}
-.cf-low-motion .panel-content,.cf-low-motion .ph-group,.cf-low-motion .tile-content,.cf-low-motion .u-content,.cf-low-motion .util-focus-label,.cf-low-motion .quiet-utils .u .ico{transform:none!important}
-.cf-low-motion .tile-content{transition:opacity 120ms linear!important}
